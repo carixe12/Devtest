@@ -1,0 +1,39 @@
+pipeline {
+
+  agent any
+
+  stages {
+
+    stage('Clone Repository') {
+      steps {
+        git 'https://git.roky.rocks/roky-team/context-frontend/-/tree/master' 
+      }
+    }
+
+    stage('Install Dependencies') {
+      steps {
+        sh 'npm install'
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh 'npm run build'
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        sh 'npm start'
+      }
+    }
+
+  }
+
+  post {
+    always {
+      cleanWs()
+    }
+  }
+
+}
